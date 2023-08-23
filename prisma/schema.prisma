@@ -1,0 +1,151 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id Int      @id @default(autoincrement())
+  Review  Review[]
+  Order   Order[]
+}
+
+model Review {
+  review_id         Int      @id @default(autoincrement())
+  review_text       String
+  date_created      DateTime @default(now())
+  date_modified     DateTime @updatedAt
+  review_user_id    Int
+  review_product_id Int
+  review_rating     Int?
+  User              User     @relation(fields: [review_user_id], references: [user_id])
+  Product           Product  @relation(fields: [review_product_id], references: [product_id])
+}
+
+model Rating {
+  rating_id       Int      @id @default(autoincrement())
+  rating_obtained Int
+  rating_total    Int
+  date_created    DateTime @default(now())
+  date_modified   DateTime @updatedAt
+  review          Review @relation (fields:[review], references:[review_id])
+}
+
+model Cart {
+  cart_id Int     @id @default(autoincrement())
+  cart_products   Product[]   
+  Order   Order[]
+}
+
+model Product {
+  product_id                Int         @id @default(autoincrement())
+  product_name              String
+  product_review            String?
+  product_short_description String?
+  product_description       String?
+  product_tags              Tag[]
+  product_categories        Category[]
+  product_variations        Variation[]
+  product_promotion         Promotion[]
+  product_sku               String
+  product_details           String?
+  product_featured_image    String
+  product_gallary           String[]
+  reviews                   Review[]
+
+  cart
+  
+}
+
+modal AttributeType {
+  attribute_type_id         Int @id @default(autoincrement())
+  attribute_type_name       String
+}
+
+model Attribute {
+  attribute_id        Int         @id @default(autoincrement())
+  attribute_name      String
+  attribute_variation Boolean
+  Variations          Variation[]
+}
+
+model Variation {
+  variation_id                  Int        @id @default(autoincrement())
+  variation_name                String
+  variation_actual_price        Float
+  variation_availability_status String
+  variation_availability_count  Int
+  variation_discount_price      Float?
+  product_id                    Int
+  product                       Product    @relation(fields: [product_id], references: [product_id])
+  Attribute                     Attribute? @relation(fields: [attributeAttribute_id], references: [attribute_id])
+  attributeAttribute_id         Int?
+}
+
+model Category {
+  category_id          Int       @id @default(autoincrement())
+  category_name        String
+  category_description String
+  Products             Product[]
+}
+
+model Tag {
+  tag_id       Int       @id @default(autoincrement())
+  tag_name     String
+  tag_category String
+  Products     Product[]
+}
+
+model Order {
+  order_id          Int      @id @default(autoincrement())
+  order_cart_id     Int
+  order_shipping_id Int
+  order_tax_id      Int
+  order_customer_id Int
+  order_payment_id  Int
+  order_status      String
+  Cart              Cart     @relation(fields: [order_cart_id], references: [cart_id])
+  Shipping          Shipping @relation(fields: [order_shipping_id], references: [shipping_id])
+  Tax               Tax      @relation(fields: [order_tax_id], references: [tax_id])
+  User              User     @relation(fields: [order_customer_id], references: [user_id])
+  Payment           Payment  @relation(fields: [order_payment_id], references: [payment_id])
+}
+
+model Tax {
+  tax_id   Int     @id @default(autoincrement())
+  tax_name String
+  tax_rate Float
+  Order    Order[]
+}
+
+model Shipping {
+  shipping_id     Int     @id @default(autoincrement())
+  shipping_method String
+  shipping_rate   Float
+  Order           Order[]
+}
+
+model Checkout {
+  checkout_id Int @id @default(autoincrement())
+}
+
+model Payment {
+  payment_id Int     @id @default(autoincrement())
+  Order      Order[]
+}
+
+model Promotion {
+  promotion_id         Int      @id @default(autoincrement())
+  promotion_name       String
+  promotion_type       String
+  promotion_start_date DateTime
+  promotion_end_date   DateTime
+  Product              Product? @relation(fields: [productProduct_id], references: [product_id])
+  productProduct_id    Int?
+}
