@@ -20,9 +20,13 @@ const BreadCrumbs = () => {
 
         if (index !== routeSegments.length - 1) {
           constructedPath += "/";
-          crumb = <Link href={"#"}> {segment} / </Link>;
+          crumb = (
+            <Link key={index} href={"#"}>
+              {segment} /
+            </Link>
+          );
         } else {
-          crumb = <span> {segment}</span>;
+          crumb = <span key={index}> {segment}</span>;
         }
         return crumb;
       })}

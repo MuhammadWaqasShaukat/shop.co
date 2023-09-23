@@ -1,11 +1,12 @@
 import BreadCrumbs from "@/components/common/breadCrumbs";
+import Filters from "@/components/filters/filters";
 import React from "react";
 
 const ShopLayout = ({ children }) => {
   return (
-    <div className="container">
+    <div className="lg:container mx-auto">
       <BreadCrumbs />
-      {children}
+      <div className="col-span-3">{children}</div>
     </div>
   );
 };

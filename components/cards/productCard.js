@@ -5,9 +5,9 @@ import Badge from "../common/badge";
 
 const ProductCard = () => {
   return (
-    <div className="w-72 flex-col flex items-start justify-start gap-4">
+    <div className="w-full flex-col flex items-start justify-start gap-4">
       {/* image */}
-      <div className="min-w-full h-auto bg-[#F2F0F1] rounded-3xl -p-4 overflow-hidden">
+      <div className="min-w-full h-auto bg-[#F2F0F1] rounded-xl -p-4 overflow-hidden">
         <Image src={"/product-10.png"} alt="image" width={1920} height={2880} />
       </div>
       {/*Details  */}

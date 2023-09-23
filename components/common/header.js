@@ -20,9 +20,11 @@ const Header = () => {
         {/* Left Side */}
         <div className="flex flex-row-reverse justify-start items-center gap-3 md:flex-row sm:gap-10 md:flex-1 ">
           <div>
-            <h1 className=" text-2xl font-extrabold uppercase font-integral leading-none">
-              Shop.co
-            </h1>
+            <Link href="/">
+              <h1 className=" text-2xl font-extrabold uppercase font-integral leading-none">
+                Shop.co
+              </h1>
+            </Link>
           </div>
           <div className="md:flex-1">
             {/* small nav */}
@@ -44,7 +46,7 @@ const Header = () => {
 
                   <ul>
                     <li>
-                      <Link href="#">Shop</Link>
+                      <Link href="/shop">Shop</Link>
                     </li>
                     <li>
                       <Link href="#">On Sale</Link>
@@ -61,7 +63,7 @@ const Header = () => {
 
               <ul className="hidden flex-row justify-start items-center gap-6 md:flex">
                 <li>
-                  <Link href="#">Shop</Link>
+                  <Link href="/shop">Shop</Link>
                 </li>
                 <li>
                   <Link href="#">On Sale</Link>
